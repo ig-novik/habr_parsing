@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 
 from webapp.model import db, News
 
+
 def get_html(url):
     try:
         result = requests.get(url)
@@ -13,6 +14,7 @@ def get_html(url):
     except(requests.RequestException, ValueError):
         print("Сетевая ошибка")
         return False
+
 
 def get_python_news():
     html = get_html("http://www.python.org/blogs/")
@@ -26,15 +28,15 @@ def get_python_news():
             published = news.find('time').text
             try:
                 published = datetime.strptime(published, '%Y-%m-%d')
-            except:
+            except ValueError:
                 published = datetime.now()
-            result_news.append({
-                "title": title,
-                "url": url,
-                "published": published
-            })
-        return  result_news
-    return False
+            save_news(title, url, published)
 
-def save_news(title, urk, published):
-    news_news = News(title=title, url=url, published=published)
+
+def save_news(title, url, published):
+    neews_exists = News.query.filter(News.url == url).count()
+    print(neews_exists)
+    if not neews_exists:
+        news_news = News(title=title, url=url, published=published)
+        db.session.add(news_news)
+        db.session.commit()

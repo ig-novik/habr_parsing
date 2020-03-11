@@ -4,4 +4,6 @@ config.py
 webapp/__pycache__/
 __pycache__
 rez/
+*.db
 *.db*
+

@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+
 class News(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
@@ -11,4 +12,3 @@ class News(db.Model):
 
     def __repr__(self):
         return 'News {} {}>'.format(self.title, self.url)
-

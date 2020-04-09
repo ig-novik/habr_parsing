@@ -6,4 +6,4 @@ __pycache__
 rez/
 *.db
 *.db*
-
+/vscode/

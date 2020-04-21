@@ -1,5 +1,5 @@
 from urllib.parse import urlparse, urljoin
-from flask import request
+from flask import request, url_for
 
 
 def is_safe_url(target):
@@ -9,8 +9,10 @@ def is_safe_url(target):
 
 
 def get_redirect_target():
+    res = False
     for target in request.values.get('next'), request.referrer:
         if not target:
             continue
         if is_safe_url(target):
             return target
+
